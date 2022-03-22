@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.btn { display: inline-block; *display: inline; *zoom: 1; padding: 4px 10px 4px; margin-bottom: 0; font-size: 13px; line-height: 18px; color: #333333; text-align: center;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-color: #f5f5f5; background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6); background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6)); background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6); background-image: -o-linear-gradient(top, #ffffff, #e6e6e6); background-image: linear-gradient(top, #ffffff, #e6e6e6); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0); border-color: #e6e6e6 #e6e6e6 #e6e6e6; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); border: 1px solid #e6e6e6; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); cursor: pointer; *margin-left: .3em; }
+.btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] { background-color: #e6e6e6; }
+.btn-large { padding: 9px 14px; font-size: 15px; line-height: normal; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.btn:hover { color: #333333; text-decoration: none; background-color: #e6e6e6; background-position: 0 -15px; -webkit-transition: background-position 0.1s linear; -moz-transition: background-position 0.1s linear; -ms-transition: background-position 0.1s linear; -o-transition: background-position 0.1s linear; transition: background-position 0.1s linear; }
+.btn-primary, .btn-primary:hover { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); color: #ffffff; }
+.btn-primary.active { color: rgba(255, 255, 255, 0.75); }
+.btn-primary { background-color: #4a77d4; background-image: -moz-linear-gradient(top, #6eb6de, #4a77d4); background-image: -ms-linear-gradient(top, #6eb6de, #4a77d4); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6eb6de), to(#4a77d4)); background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4); background-image: -o-linear-gradient(top, #6eb6de, #4a77d4); background-image: linear-gradient(top, #6eb6de, #4a77d4); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#6eb6de, endColorstr=#4a77d4, GradientType=0);  border: 1px solid #3762bc; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5); }
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] { filter: none; background-color: #4a77d4; }
+.btn-block { width: 100%; display:block; }
+
+* { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; }
+
+html { width: 100%; height:100%; }
+
+body {
+	width: 100%;
+	height:100%;
+	font-family: 'Open Sans', sans-serif;
+	background: #092756;
+	color: #fff;
+	font-size: 18px;
+	text-align:center;
+	letter-spacing:1.2px;
+	background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+
+}
+.login {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	margin: -150px 0 0 -150px;
+	width:400px;
+	height:400px;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
+
+input {
+	width: 100%;
+	margin-bottom: 10px;
+	background: rgba(0,0,0,0.3);
+	border: none;
+	outline: none;
+	padding: 10px;
+	font-size: 13px;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	border: 1px solid rgba(0,0,0,0.3);
+	border-radius: 4px;
+	box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+	-webkit-transition: box-shadow .5s ease;
+	-moz-transition: box-shadow .5s ease;
+	-o-transition: box-shadow .5s ease;
+	-ms-transition: box-shadow .5s ease;
+	transition: box-shadow .5s ease;
+}
+input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
+</style>
+<head>
+  <meta charset="UTF-8">
+  <title>IOT DETECTOR</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<style>
+  h1 {text-align: center;}
+  td {text-align: center;}
+  th {text-align: center;}
+</style>
+<body>
+
+<br>
+<h1 style="color:white">
+    IOT Devices Database
+</h1>
+<br>
+<div >
+<table class="table table-striped table-dark table-hover table-responsive-xl">
+  <thead>
+    <tr>
+      <th scope="col">Serial Number</th>
+      <th scope="col">Device Name</th>
+      <th scope="col">Device IP Address</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" >1</th>
+      <td>Aria</td>
+      <td>10.10.10.123</td>
+
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>D-LinkHomeHub</td>
+      <td>10.10.10.87</td>
+
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>D-LinkWaterSensor</td>
+      <td>10.10.10.11</td>
+
+    </tr>
+     <tr>
+      <th scope="row">4</th>
+      <td>EdimaxPlug2101W</td>
+      <td>10.10.10.232</td>
+
+    </tr>
+    </tr>
+     <tr>
+      <th scope="row">5</th>
+      <td>D-LinkCam</td>
+      <td>10.10.10.37</td>
+
+    </tr>
+     <tr>
+      <th scope="row">6</th>
+      <td>D-LinkDayCam</td>
+      <td>10.10.10.58</td>
+
+    </tr>
+   <tr>
+      <th scope="row">7</th>
+      <td>D-LinkDoorSensor</td>
+      <td>10.10.10.87</td>
+
+    </tr>
+  <tr>
+      <th scope="row">8</th>
+      <td>D-LinkSensor</td>
+      <td>10.10.10.72</td>
+
+    </tr>
+  <tr>
+      <th scope="row">9</th>
+      <td>D-LinkSiren</td>
+      <td>10.10.10.39</td>
+
+    </tr>
+  <tr>
+      <th scope="row">10</th>
+      <td>D-LinkSwitch</td>
+      <td>10.10.10.176</td>
+
+    </tr>
+   <tr>
+      <th scope="row">11</th>
+      <td>EdimaxCam1</td>
+      <td>10.10.10.51</td>
+
+    </tr>
+  <tr>
+      <th scope="row">12</th>
+      <td>EdimaxCam2</td>
+      <td>10.10.10.227</td>
+
+    </tr>
+   <tr>
+      <th scope="row">13</th>
+      <td>EdimaxPlug1101W</td>
+      <td>10.10.10.186</td>
+
+    </tr>
+  <tr>
+      <th scope="row">14</th>
+      <td>EdimaxPlug1101W</td>
+      <td>10.10.10.186</td>
+
+    </tr>
+  <tr>
+      <th scope="row">15</th>
+      <td>EdnetCam1</td>
+      <td>10.10.10.186</td>
+
+    </tr>
+  <tr>
+      <th scope="row">16</th>
+      <td>EdnetCam2</td>
+      <td>10.10.10.207</td>
+
+    </tr>
+  <tr>
+      <th scope="row">17</th>
+      <td>EdnetGateway</td>
+      <td>10.10.10.149</td>
+
+    </tr>
+   <tr>
+      <th scope="row">18</th>
+      <td>HomeMaticPlug</td>
+      <td>10.10.10.89</td>
+
+    </tr>
+   <tr>
+      <th scope="row">19</th>
+      <td>HueBridge</td>
+      <td>10.10.10.6</td>
+
+    </tr>
+     <tr>
+      <th scope="row">20</th>
+      <td>HueSwitch</td>
+      <td>10.10.10.6</td>
+
+    </tr>
+   </tr>
+     <tr>
+      <th scope="row">21</th>
+      <td>Lightify</td>
+      <td>10.10.10.114</td>
+
+    </tr>
+  <tr>
+      <th scope="row">22</th>
+      <td>MAXGateway</td>
+      <td>10.10.10.129</td>
+
+    </tr>
+  <tr>
+      <th scope="row">22</th>
+      <td>TP-LinkPlugHS100</td>
+      <td>10.10.10.228</td>
+
+    </tr>
+  <tr>
+      <th scope="row">23</th>
+      <td>TP-LinkPlugHS110</td>
+      <td>10.10.10.20</td>
+
+    </tr>
+   <tr>
+      <th scope="row">24</th>
+      <td>WeMoInsightSwitch</td>
+      <td>10.10.10.158</td>
+
+    </tr>
+  <tr>
+      <th scope="row">25</th>
+      <td>WeMoInsightSwitch2</td>
+      <td>10.10.10.124</td>
+
+    </tr>
+   <tr>
+      <th scope="row">26</th>
+      <td>WeMoLink</td>
+      <td>10.10.10.144</td>
+
+    </tr>
+   <tr>
+      <th scope="row">27</th>
+      <td>WeMoSwitch</td>
+      <td>10.10.10.252</td>
+
+    </tr>
+   <tr>
+      <th scope="row">28</th>
+      <td>WeMoSwitch2</td>
+      <td>10.10.10.190</td>
+
+    </tr>
+   <tr>
+      <th scope="row">29</th>
+      <td>Withings</td>
+      <td>10.10.10.21</td>
+
+    </tr>
+  </tbody>
+</table>
+</div>
+</body>

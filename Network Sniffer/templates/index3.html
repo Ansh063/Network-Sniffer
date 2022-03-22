@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr" >
+<style>
+body{
+        background-image: url("{{ url_for('static', filename='images.jpg') }}");
+    }
+</style>
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <!--Gauge  -->
+    <script type="text/javascript" src="http://pubnub.github.io/eon/lib/eon.js"></script>
+
+
+</head>
+
+<body>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+
+</figure>
+
+    <div class="jumbotron" style="color:#000000">
+        <h1 class="text-center text-white" >IOT Device Network Sniffer </h1>
+        <h2 class="text-center text-white"> (Real Time Network Monitoring) </h2>
+    </div>
+    <br>
+    <br>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <!--
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor1"> Sensor : </h1>
+            </div>
+            <br>
+
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor2">Sensor :</h1>
+            </div>
+            <br>
+
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor3">Sensor :</h1>
+            </div>
+            <br>
+-->
+
+        </div>
+    </div>
+
+    <style >
+
+        .jumbotron{
+            //background-color: #013A68;
+            background-color: #000000;
+            widows: 150px;
+            height: 220px;
+            justify-content: center;
+
+        }
+
+        .row{
+            justify-content: center;
+        }
+
+
+    </style>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-ICMP">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-TCP">
+
+            </div>
+        </div>
+    </div>
+
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-UDP">
+
+            </div>
+        </div>
+    </div>
+<!--    Including CSS  -->
+    .highcharts-figure,
+
+
+    <script>
+        var chartICMP;
+        var chartTCP;
+        var chartUDP;
+
+        function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/data');
+
+            var tm = requests.done(function (result)
+            {
+                // ICMP
+                var seriesICMP = chartICMP.series[0],
+                    shiftICMP = seriesICMP.data.length > 20;
+
+                // TCP
+                var seriesTCP = chartTCP.series[0],
+                    shiftTCP = seriesTCP.data.length > 20;
+
+                // UDP
+                var seriesUDP = chartUDP.series[0],
+                    shiftUDP = seriesUDP.data.length > 20;
+
+                // Add the Point
+                // Time ICMP\
+                var data1 = [];
+                data1.push(result[0]);
+                data1.push(result[1]);
+
+
+                // Add the Point
+                // Time TCP
+                var data2 = [];
+                data2.push(result[0]);
+                data2.push(result[2]);
+
+                // Time UDP\
+                var data3 = [];
+                data3.push(result[0]);
+                data3.push(result[3]);
+
+                chartICMP.series[0].addPoint(data1, true, shiftICMP);
+                chartTCP.series[0].addPoint(data2, true, shiftTCP);
+                chartUDP.series[0].addPoint(data3, true, shiftUDP);
+
+                $(".sensor1").text("");
+                $(".sensor1").text("ICMP : " +  Math.round(data1[1]) );
+
+                $(".sensor2").text("");
+                $(".sensor2").text("TCP : " +  Math.round(data2[1]) );
+
+                $(".sensor3").text("");
+                $(".sensor3").text("UDP : " +  Math.round(data3[1]) );
+
+                // call it again after one second
+                setTimeout(requestData, 4000);
+
+            });
+        }
+
+        $(document).ready(function()
+        {
+        chartICMP = new Highcharts.Chart({
+                chart:
+                    {
+                    //backgroundColor: '  #003c7c  ',
+                    backgroundColor: '  #000000  ',
+                        renderTo: 'data-ICMP',
+                        defaultSeriesType: 'area',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                title:
+                    {
+                        text: 'ICMP (Internet Control Message Protocol)',
+                    style: {
+                            color: 'white',
+                            frontWeight: 'bold',
+                            fontSize:'25px'
+                        }
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    labels:{
+
+                        style:{
+                            color: 'white',
+                            fontSize:'15px'
+                        }
+                    },
+                    tickPixelInterval: 150,
+                    maxZoom: 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Packets',
+                        style: {
+
+                            color: 'white',
+                            frontWeight: 'bold',
+                            fontSize:'25px'
+                        },
+
+                        margin: 80
+                    }
+                },
+                plotOptions: {
+                    series: {
+                        marker:{
+                            enabled: true,
+                            symbol: 'circle',
+                            radius: 7,
+                            fillColor: " #ff0800 "
+                        }
+                    }
+                },
+
+                series: [{
+                    color: '#ec684b',
+                    lineColor: ' #ff0800 ',
+                    name: 'ICMP',
+                    data: []
+                }]
+            });
+            // --------------Chart 1 Ends - -----------------
+
+            chartTCP = new Highcharts.Chart({
+                chart:
+                    {
+                        backgroundColor: '  #000000  ',
+                        renderTo: 'data-TCP',
+                        defaultSeriesType: 'area',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                title:
+                    {
+                        text: 'TCP (Transmission Control Protocol)',
+                    style: {
+                            color: 'white',
+                            frontWeight: 'bold'
+                        }
+                    },
+                xAxis: {
+                    type: 'datetime',
+
+                    labels:{
+
+                        style:{
+                            color: 'white',
+                            fontSize:'15px'
+                        }
+                    },
+                    tickPixelInterval: 150,
+                    maxZoom: 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Packets',
+                        style: {
+                            color: 'white',
+                            frontWeight: 'bold',
+                            fontSize:'25px'
+                        },
+                        margin: 80
+                    }
+
+                },
+                plotOptions: {
+                    series: {
+                        marker:{
+                            enabled: true,
+                            symbol: 'circle',
+                            radius: 7,
+                            fillColor: " #00fb04 "
+                        }
+                    }
+                },
+                series: [{
+                    color: '#4becb6',
+                    lineColor: ' #00fb04 ',
+                    name: 'TCP',
+                    data: []
+                }]
+            });
+
+
+        });
+
+        chartUDP = new Highcharts.Chart({
+                chart:
+                    {
+                    backgroundColor: '  #000000  ',
+                    renderTo: 'data-UDP',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+
+                    text: 'UDP (User Datagram Protocol)',
+                    style: {
+                            color: 'white',
+                            frontWeight: 'bold'
+                        }
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    labels:{
+
+                        style:{
+                            color: 'white',
+                            fontSize:'15px'
+                        }
+                    },
+                    tickPixelInterval: 150,
+                    maxZoom: 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Packets',
+                        style: {
+                            color: 'white',
+                            frontWeight: 'bold',
+                            fontSize:'25px'
+                        },
+                        margin: 80
+                            }
+                         },
+                plotOptions: {
+                    series: {
+                        marker:{
+                            enabled: true,
+                            symbol: 'circle',
+                            radius: 7,
+                            fillColor: " #ff00cd "
+                        }
+                    }
+                },
+                series: [{
+                    color: '#7765D4',
+                    lineColor: ' #ec00ff ',
+                    name: 'UDP',
+                    data: []
+                }]
+            });
+    </script>
+
+
+
+
+</body>
+
+
+</html>
